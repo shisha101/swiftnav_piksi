@@ -1,0 +1,13 @@
+<launch>
+	<param name="use_sim_time" value="true" />
+
+	<arg name="bag_path" default="/home/abs8rng/Bagfiles/" />
+	<arg name="bag_name_1" default="2015-12-01-16-41-58" />
+	<arg name="Rate" default="10" />
+    <arg name="Topic_name" default="/sensor/gps/trimble/fix" />
+
+	<node pkg="rosbag" type="play" name="player" output="screen" args="-l -r $(Rate) $(arg bag_path)$(arg bag_name_1).bag" />
+
+	<node pkg="rqt_plot" type="rqt_plot" name="rqt_bag_file_plot" output="screen" args="$(Topic_name)" />
+
+</launch>
