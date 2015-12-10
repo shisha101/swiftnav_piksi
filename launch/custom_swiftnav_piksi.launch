@@ -1,6 +1,7 @@
 <launch>
    <node pkg="swiftnav_piksi" type="piksi_node" name="piksi_node_1" output="screen">
 	<param name="port" value="/dev/ttyUSB1" />
+    <param name="frame_name" value="gps_piksi_rover_1" />
    </node>
 
    <node pkg="diagnostic_aggregator" type="aggregator_node" name="diagnostic_aggregator" >
