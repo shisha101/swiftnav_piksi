@@ -15,11 +15,11 @@ namespace swiftnav_piksi
 {
   PIKSI::PIKSI( const ros::NodeHandle &_nh,
     const ros::NodeHandle &_nh_priv,
-    const std::string _port ) :
+    const std::string _port, const std::string _frame_name ) :
     nh( _nh ),
     nh_priv( _nh_priv ),
     port( _port ),
-    frame_id( "gps" ),
+    frame_id( _frame_name ),
     piksid( -1 ),
 
         heartbeat_diag(nh, nh_priv, "ppiksi_time_diag"),
