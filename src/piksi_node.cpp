@@ -57,23 +57,24 @@
 */
 int main( int argc, char *argv[] )
 {
-	ros::init( argc, argv, "piksi_node" );
+  ros::init( argc, argv, "piksi_node" );
 
-	ros::NodeHandle nh;
-	ros::NodeHandle nh_priv( "~" );
+  ros::NodeHandle nh;
+  ros::NodeHandle nh_priv( "~" );
 
-	std::string port;
-	nh_priv.param( "port", port, (const std::string)"/dev/ttyUSB0" );
+  std::string port, frame_name;
+  nh_priv.param( "port", port, (const std::string)"/dev/ttyUSB0" );
+  nh_priv.param( "frame_name", frame_name, (const std::string)"gps_piksi_rover_link" );
 
-	swiftnav_piksi::PIKSI piksi( nh, nh_priv, port );
+  swiftnav_piksi::PIKSI piksi( nh, nh_priv, port, frame_name );
 
-	ROS_DEBUG( "Opening Piksi on %s", port.c_str( ) );
-	if( !piksi.PIKSIOpen( ) )
-		ROS_ERROR( "Failed to open Piksi on %s", port.c_str( ) );
-	else
-		ROS_INFO( "Piksi opened successfully on %s", port.c_str( ) );
+  ROS_DEBUG( "Opening Piksi on %s", port.c_str( ) );
+  if( !piksi.PIKSIOpen( ) )
+    ROS_ERROR( "Failed to open Piksi on %s", port.c_str( ) );
+  else
+    ROS_INFO( "Piksi opened successfully on %s", port.c_str( ) );
 
-	ros::spin( );
+  ros::spin( );
 
-	std::exit( EXIT_SUCCESS );
+  std::exit( EXIT_SUCCESS );
 }
