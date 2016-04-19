@@ -65,6 +65,7 @@ int main( int argc, char *argv[] )
 	std::string port, frame_name, tn_prefix;
 	nh_priv.param( "port", port, (const std::string)"/dev/ttyUSB0" );
   nh_priv.param( "frame_name", frame_name, (const std::string)"gps_piksi_rover_link" );
+  nh_priv.param( "tn_prefix", tn_prefix, (const std::string)"" );
 
 	swiftnav_piksi::PIKSI piksi( nh, nh_priv, port, frame_name, tn_prefix);
 
