@@ -327,6 +327,11 @@ namespace swiftnav_piksi
             h_covariance = driver->rtk_h_accuracy * driver->rtk_h_accuracy;
             v_covariance = driver->rtk_h_accuracy * driver->rtk_h_accuracy;
         }
+        else if(1 == sbp_ned.flags)
+        {
+          h_covariance = driver->rtk_h_accuracy;
+          v_covariance = driver->rtk_h_accuracy;
+        }
 
         // Pose x/y/z covariance is whatever we decided h & v covariance is
         rtk_odom_msg->pose.covariance[0]  = h_covariance;   // x = 0, 0 in the 6x6 cov matrix
@@ -344,8 +349,8 @@ namespace swiftnav_piksi
         rtk_odom_msg->twist.twist.linear.z = driver->rtk_vel_up;
 
         // Set angular velocity to 0 - GPS doesn't provide angular velocity
-        rtk_odom_msg->twist.twist.angular.x = 0;
-        rtk_odom_msg->twist.twist.angular.y = 0;
+        rtk_odom_msg->twist.twist.angular.x = sbp_ned.flags;  // Flag for RTK fix, 1 = good, 0 = bad
+        rtk_odom_msg->twist.twist.angular.y = sbp_ned.n_sats; // number of satelites used for RTK solution
         rtk_odom_msg->twist.twist.angular.z = 0;
 
         // set up the Twist covariance matrix
