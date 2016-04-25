@@ -14,31 +14,31 @@ namespace swiftnav_piksi
 {	
 	PIKSI::PIKSI( const ros::NodeHandle &_nh,
 		const ros::NodeHandle &_nh_priv,
-		const std::string _port, const std::string _frame_name, const std::string _tn_prefix) :
+		const std::string _port, const std::string _frame_name, const std::string _tn_prefix, std::string _piksi_name) :
 		nh( _nh ),
 		nh_priv( _nh_priv ),
 		port( _port ),
 		frame_id( _frame_name ),
 		piksid( -1 ),
     tn_prefix(_tn_prefix),
-
-        heartbeat_diag(nh, nh_priv, "ppiksi_time_diag"),
-        llh_diag(nh, nh_priv, "ppiksi_llh_diag"),
-        rtk_diag(nh, nh_priv, "ppiksi_rtk_diag"),
+    
+        heartbeat_diag(nh, nh_priv, "/"+_piksi_name+"_time_diag"),
+        llh_diag(nh, nh_priv, "/"+_piksi_name+"_llh_diag"),
+        rtk_diag(nh, nh_priv, "/"+_piksi_name+"_rtk_diag"),
 
 		min_llh_rate( 0.5 ),
-		max_llh_rate( 50.0 ),
+		max_llh_rate( 12.0 ),
 		min_rtk_rate( 0.5 ),
-		max_rtk_rate( 50.0 ),
+		max_rtk_rate( 12.0 ),
 		min_heartbeat_rate( 0.5 ),
-		max_heartbeat_rate( 50.0 ),
+		max_heartbeat_rate( 12.0 ),
 
 		llh_pub_freq( diagnostic_updater::FrequencyStatusParam(
-                    &min_llh_rate, &max_llh_rate, 0.1, 50 ) ),
+                    &min_llh_rate, &max_llh_rate, 0.1, 5 ) ),
 		rtk_pub_freq( diagnostic_updater::FrequencyStatusParam( 
-                    &min_rtk_rate, &max_rtk_rate, 0.1, 50 ) ),
+                    &min_rtk_rate, &max_rtk_rate, 0.1, 5 ) ),
 		heartbeat_pub_freq( diagnostic_updater::FrequencyStatusParam( 
-                    &min_rtk_rate, &max_rtk_rate, 0.1, 50 ) ),
+                    &min_rtk_rate, &max_rtk_rate, 0.1, 5 ) ),
 
 		io_failure_count( 0 ),
 		last_io_failure_count( 0 ),
@@ -65,13 +65,14 @@ namespace swiftnav_piksi
 		spin_thread( &PIKSI::spin, this )
 	{
 		cmd_lock.unlock( );
-		heartbeat_diag.setHardwareID( "piksi heartbeat" );
+		heartbeat_diag.setHardwareID( _piksi_name+" heartbeat" );
+
         heartbeat_diag.add( heartbeat_pub_freq );
 
-		llh_diag.setHardwareID( "piksi lat/lon" );
+		llh_diag.setHardwareID( _piksi_name+" lat/lon" );
 		llh_diag.add( llh_pub_freq );
 
-		rtk_diag.setHardwareID( "piksi rtk" );
+		rtk_diag.setHardwareID( _piksi_name+" rtk" );
 		rtk_diag.add( "Piksi Status", this, &PIKSI::DiagCB );
 		rtk_diag.add( rtk_pub_freq );
 
