@@ -4,10 +4,11 @@
     <arg name="diag_on" default="false"/>
     <arg name="tn_prefix" default="sensor/piksi/"/>
     <arg name="piksi_name" default="piksi"/>
+    <arg name="frame_id" default="gps_piksi_link"/>
 
     <node pkg="swiftnav_piksi" type="piksi_node" name="$(arg node_name)" output="screen">
 	    <param name="port" value="$(arg port)" />
-        <param name="frame_name" value="gps_piksi_rover_1" />
+        <param name="frame_id" value="$(arg frame_id)" />
         <param name="tn_prefix" value="$(arg tn_prefix)" />
         <param name="piksi_name" value="$(arg piksi_name)" />
     </node>

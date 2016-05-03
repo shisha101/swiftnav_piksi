@@ -62,14 +62,14 @@ int main( int argc, char *argv[] )
 	ros::NodeHandle nh;
 	ros::NodeHandle nh_priv( "~" );
 
-	std::string port, frame_name, tn_prefix, piksi_name;
+	std::string port, frame_id, tn_prefix, piksi_name;
 	nh_priv.param( "port", port, (const std::string)"/dev/ttyUSB0" );
-  nh_priv.param( "frame_name", frame_name, (const std::string)"gps_piksi_rover_link" );
+  nh_priv.param( "frame_id", frame_id, (const std::string)"gps_piksi_link" );
   nh_priv.param( "tn_prefix", tn_prefix, (const std::string)"" );
   nh_priv.param( "piksi_name", piksi_name, (const std::string)"piksi" );
   
 
-	swiftnav_piksi::PIKSI piksi( nh, nh_priv, port, frame_name, tn_prefix, piksi_name);
+	swiftnav_piksi::PIKSI piksi( nh, nh_priv, port, frame_id, tn_prefix, piksi_name);
 
 	ROS_DEBUG( "Opening Piksi on %s", port.c_str( ) );
 	if( !piksi.PIKSIOpen( ) )

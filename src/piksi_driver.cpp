@@ -75,8 +75,6 @@ namespace swiftnav_piksi
 		rtk_diag.setHardwareID( _piksi_name+" rtk" );
 		rtk_diag.add( "Piksi Status", this, &PIKSI::DiagCB );
 		rtk_diag.add( rtk_pub_freq );
-
-		nh_priv.param( "frame_id", frame_id, (std::string)"gps" );
 	}
 
 	PIKSI::~PIKSI( )

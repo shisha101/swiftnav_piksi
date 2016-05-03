@@ -67,7 +67,7 @@ namespace swiftnav_piksi
 	public:
 		PIKSI( const ros::NodeHandle &_nh = ros::NodeHandle( ),
 			const ros::NodeHandle &_nh_priv = ros::NodeHandle( "~" ),
-			const std::string _port = "/dev/ttyUSB0", const std::string _frame_name = "gps_piksi_rover_link", const std::string _tn_prefex = "", const std::string _piksi_name = "piksi");
+			const std::string _port = "/dev/ttyUSB0", const std::string _frame_name = "gps_piksi_link", const std::string _tn_prefex = "", const std::string _piksi_name = "piksi");
 		~PIKSI( );
 		bool PIKSIOpen( );
 		void PIKSIClose( );
